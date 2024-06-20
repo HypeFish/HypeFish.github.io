@@ -1,0 +1,23 @@
+---
+import { Site, Navigation } from "../data/sitedata.ts";
+
+// If you have props or state, you can define them here
+// For example, if you want to dynamically change the header title
+const { title = "My Website" } = Astro.props;
+---
+
+<header>
+  <nav>
+    <a href="/" class="logo">{title}</a>
+    <ul>
+      {
+        Navigation.map((item) => (
+          <li>
+            <a href={item.link}>{item.name}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
