@@ -3,6 +3,5 @@ import react from '@astrojs/react';
 
 export default defineConfig({
   integrations: [react()],
-  site: 'https://HypeFish.github.io',
-  base: '/',
+  site: 'https://HypeFish.github.io'
 });
