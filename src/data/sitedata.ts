@@ -9,10 +9,10 @@ export const Site = {
 };
 
 export const Navigation = [
-  { name: "About", link: "/about" },
-  { name: "Project", link: "/project" },
-  { name: "Blog", link: "/blog" },
-  { name: "Chat Room", link: "/chat" },
-  { name: "Game", link: "/game" },
+  { name: "About", link: "/personal/about" },
+  { name: "Project", link: "/personal/project" },
+  { name: "Blog", link: "/personal/blog" },
+  { name: "Chat Room", link: "/personal/chat" },
+  { name: "Game", link: "/personal/game" },
 ];
 
