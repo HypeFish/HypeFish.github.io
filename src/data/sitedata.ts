@@ -1,11 +1,18 @@
 export const Site = {
-  title: "My Website",
+  title: "HypeFish",
+  description: "Welcome to HypeFish's personal website.",
+  author: "HypeFish",
+  socialMedia: {
+    twitter: "https://twitter.com/HypeFish2",
+    github: "https://github.com/HypeFish",
+  },
 };
 
 export const Navigation = [
-  { name: "Home", link: "/" },
   { name: "About", link: "/about" },
-  { name: "Portfolio", link: "/portfolio" },
+  { name: "Projects", link: "/projects" },
   { name: "Blog", link: "/blog" },
-  { name: "Contact", link: "/contact" },
+  { name: "Chat Room", link: "/chat" },
+  { name: "Game", link: "/game" },
 ];
+

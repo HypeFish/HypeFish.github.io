@@ -1,0 +1,100 @@
+/* src/styles/header.css */
+header {
+  background-color: #2b2b2b;
+  color: #fff;
+  padding: 0.5rem 1rem; /* Reduce padding */
+}
+
+.logo-pronouns {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #076cfb;
+  margin-right: 0.5rem; /* Add margin to the right of the logo */
+}
+
+.pronouns {
+  font-size: 1rem;
+  color: #fff;
+  margin-right: 1rem;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.nav-content {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem; /* Adjust the gap value to increase spacing between nav items */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+nav a {
+  text-decoration: none;
+}
+
+.nav-button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem; /* Adjust font size if needed */
+  cursor: pointer;
+  padding: 0.5rem 1rem; /* Reduce padding */
+  border-radius: 5px; /* Adjust border radius */
+  transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.ascii-art {
+  font-family: monospace;
+  color: #fff;
+  margin-top: 0.5rem; /* Reduce margin-top */
+  margin-left: 1rem; /* Add margin-left for spacing */
+}
+
+/* Media queries for mobile responsiveness */
+@media (max-width: 768px) {
+  .logo-pronouns {
+    justify-content: center;
+    margin-bottom: 1rem; /* Add spacing below logo and pronouns */
+  }
+
+  nav ul {
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  nav ul li {
+    margin-bottom: 0.5rem; /* Add spacing between nav items */
+  }
+
+  .nav-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ascii-art {
+    display: none; /* Hide ASCII art on mobile */
+  }
+}

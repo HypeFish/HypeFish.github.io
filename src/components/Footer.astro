@@ -1,0 +1,12 @@
+---
+import {Site} from "../data/sitedata.ts";
+import "../styles/footer.css";
+---
+
+<footer>
+  <p>&copy; 2024 {Site.author}. All rights reserved.</p>
+  <p>
+    <a href={Site.socialMedia.twitter}>Twitter</a> | 
+    <a href={Site.socialMedia.github}>GitHub</a> 
+  </p>
+</footer>

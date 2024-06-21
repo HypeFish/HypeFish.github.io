@@ -1,0 +1,73 @@
+---
+interface TypingEffectProps {
+  texts: string[];
+  speed?: number;
+}
+
+const { texts, speed = 100 } = Astro.props as TypingEffectProps;
+---
+
+<div id="typing-container">
+  {texts.map((text, index) => (
+    <p class="typing-effect" data-text={text} data-speed={speed.toString()} key={index} style="display: none;"></p>
+  ))}
+</div>
+
+<style>
+.typing-effect::after {
+  content: '|';
+  animation: blink 0.7s;
+  font-family: Arial, sans-serif;
+
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  50.01%, 100% {
+    opacity: 0;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const typingEffectElements = document.querySelectorAll<HTMLParagraphElement>('.typing-effect');
+  let currentIndex = 0;
+
+  function typeWriter(element: HTMLParagraphElement, text: string, speed: number, callback: () => void) {
+    let index = 0;
+
+    function type() {
+      if (index < text.length) {
+        element.textContent += text.charAt(index);
+        index++;
+        setTimeout(type, speed);
+      } else {
+        element.classList.remove('typing');
+        if (callback) {
+          callback();
+        }
+      }
+    }
+
+    type();
+  }
+
+  function startTypingEffects() {
+    if (currentIndex < typingEffectElements.length) {
+      const element = typingEffectElements[currentIndex];
+      element.style.display = 'block';  // Change to block to ensure new line
+      const text = element.dataset.text || '';
+      const speed = parseInt(element.dataset.speed || '100', 10);
+      typeWriter(element, text, speed, () => {
+        currentIndex++;
+        startTypingEffects();
+      });
+    }
+  }
+
+  startTypingEffects();
+});
+</script>
