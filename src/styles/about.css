@@ -1,0 +1,79 @@
+/* src/styles/about.css */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  text-align: left; /* Align text to the left for better readability */
+  max-width: 1200px; /* Limit the width to avoid too much white space on large screens */
+  margin: 0 auto; /* Center the main content */
+}
+
+.intro {
+  font-size: 2rem;
+  text-align: center; /* Center the intro text */
+}
+
+.profile {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+.profile-pic {
+  width: 40vmin;
+  height: 40vmin;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position:left;
+}
+
+
+.bio {
+  flex: 1; /* Allow bio to take up available space */
+}
+
+.skills {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.skill-set {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+  gap: 2rem;
+}
+
+.skill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fun-facts, .contact {
+  max-width: 800px; /* Limit the width to avoid too much white space */
+  margin: 0 auto; /* Center the sections */
+}
+
+.contact a {
+  color: #007acc;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact a:hover {
+  color: #005f99;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+  .profile {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .skill-set {
+    justify-content: center;
+  }
+}
