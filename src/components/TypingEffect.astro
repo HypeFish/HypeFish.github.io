@@ -9,7 +9,7 @@ const { texts, speed = 100 } = Astro.props as TypingEffectProps;
 
 <div id="typing-container">
   {texts.map((text, index) => (
-    <p class="typing-effect" data-text={text} data-speed={speed.toString()} key={index} style="display: none;"></p>
+    <p class="typing-effect" data-text={text} data-speed={speed.toString()}></p>
   ))}
 </div>
 
