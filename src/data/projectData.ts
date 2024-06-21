@@ -3,9 +3,9 @@ export const projects = [
     {
       title: "Asteriods - Reinforcement Learning",
       description: "This is a project that uses the OpenAI package Gymasium, Pytorch, and Numpy to teach an Artificial Agent" +
-      "on how to play the classic arcade game Asteroids. You can watch the model play at the following link, and the source code is here as well.",
-      watch: "/asteroids",
-      code: "https://example.com"
+      "on how to play the classic arcade game Asteroids. You can watch the model play at the following link!",
+      link: "/video",
+      
     },
     {
       title: "Project Two",

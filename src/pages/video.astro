@@ -1,0 +1,37 @@
+---
+import Layout from "../layouts/Layout.astro"
+---
+
+<Layout title="Hypefish">
+  <div class="header">
+    <h1>Asteroids Model Demo</h1>
+    <h1>
+      <a href="/project">Back to Projects</a>
+    </h1>
+  </div>
+  <video width="640" height="480" controls>
+    <source src="/episodefinal-episode-0.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <p>
+    <a href="https://github.com/your-github-repo" target="_blank">View on GitHub</a>
+  </p>
+</Layout>
+
+<style>
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  h1 {
+    color: crimson;
+  }
+  .header h1 a {
+    color: crimson;
+    text-decoration: none;
+  }
+  .header h1 a:hover {
+    text-decoration: underline;
+  }
+</style>
