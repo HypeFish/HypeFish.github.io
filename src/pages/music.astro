@@ -1,0 +1,114 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import TypingEffect from "../components/TypingEffect.astro";
+import "../styles/global.css";
+import "../styles/music.css";
+import playlistDataJson from "../data/playlistData.json";
+
+// Define the TypeScript interfaces
+interface Artist {
+  name: string;
+}
+
+interface Album {
+  images: { url: string }[];
+}
+
+interface Track {
+  name: string;
+  artists: Artist[];
+  preview_url: string | null;
+  external_urls: { spotify: string };
+  album: Album;
+}
+
+interface TrackItem {
+  track: Track | null;
+}
+
+interface PlaylistData {
+  name: string;
+  description: string;
+  tracks: {
+    items: TrackItem[];
+  };
+}
+
+// Type assertion for the imported JSON data
+const playlistData = playlistDataJson as PlaylistData;
+
+// Function to shuffle and pick 10 random tracks
+function getRandomTracks(tracks: TrackItem[], count: number): TrackItem[] {
+  const shuffled = tracks.sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+}
+
+const randomTracks = getRandomTracks(playlistData.tracks.items, 10);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" sizes="192x192" href="/android-chrome-192x192.png" />
+    <link rel="icon" sizes="512x512" href="/android-chrome-512x512.png" />
+    <title>Music Playlist</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <Header />
+      <main>
+        <section class="playlist">
+          <h1>
+            <TypingEffect texts={[playlistData.name]} />
+          </h1>
+          <p>
+            This is my mega Spotify playlist of 1000+ songs! If you refresh,
+            you'll get a new 10 songs! Some songs aren't allowed preview
+            unfortunately
+          </p>
+          {
+            randomTracks.map((trackItem) => {
+              const track = trackItem.track;
+              if (!track) return null;
+              const albumImage = track.album?.images?.[0]?.url || "";
+              const artists =
+                track.artists?.map((artist) => artist.name).join(", ") ||
+                "Unknown Artist";
+              return (
+                <div class="track">
+                  {albumImage && (
+                    <img src={albumImage} alt={`${track.name} album cover`} />
+                  )}
+                  <div class="track-info">
+                    <h3>{track.name || "Unknown Track"}</h3>
+                    <p>{artists}</p>
+                  </div>
+                  {track.preview_url && (
+                    <audio controls>
+                      <source src={track.preview_url} type="audio/mpeg" />
+                      Your browser does not support the audio element.
+                    </audio>
+                  )}
+                  <a
+                    href={track.external_urls?.spotify || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Listen on Spotify
+                  </a>
+                </div>
+              );
+            })
+          }
+        </section>
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>

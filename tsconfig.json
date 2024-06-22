@@ -1,3 +1,15 @@
 {
-  "extends": "astro/tsconfigs/strict"
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ESNext",  // Use a compatible module setting for 'bundler'
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "resolveJsonModule": true,  // Add this line to handle JSON imports
+    "types": ["bun-types"]
+  },
+  "include": ["spotify.ts", "src/**/*.ts", "src/**/*.astro"]
 }
