@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../service/firebase.ts';
+import { db } from '../service/firebase';
 import { collection, addDoc, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { FaUserCircle } from 'react-icons/fa';
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
@@ -49,7 +50,10 @@ const Chat = () => {
       <div className="messages">
         {messages.map((message) => (
           <div key={message.id} className="message">
-            {message.text}
+            <FaUserCircle className="message-icon" size={32} />
+            <div className="message-text">
+              {message.text}
+            </div>
           </div>
         ))}
       </div>
