@@ -19,7 +19,7 @@ const getAccessToken = async (): Promise<string> => {
     },
     body: 'grant_type=client_credentials'
   });
-  const data = await response.json();
+  const data: { access_token: string } = await response.json();
   return data.access_token;
 };
 
@@ -52,8 +52,8 @@ const getPlaylistTracks = async (accessToken: string, playlistId: string): Promi
         Authorization: 'Bearer ' + accessToken
       }
     });
-    const data = await response.json();
-    tracks = tracks.concat(data.items.map((item: any) => item.track));
+    const data: { items: { track: Track }[]; total: number } = await response.json();
+    tracks = tracks.concat(data.items.map((item) => item.track));
     offset += limit;
     total = data.total;
   } while (offset < total);
@@ -67,7 +67,7 @@ const getPlaylistDetails = async (accessToken: string, playlistId: string): Prom
       Authorization: 'Bearer ' + accessToken
     }
   });
-  const data = await response.json();
+  const data: Playlist = await response.json();
   return data;
 };
 
