@@ -11,5 +11,5 @@
     "resolveJsonModule": true,  // Add this line to handle JSON imports
     "types": ["bun-types"]
   },
-  "include": ["spotify.ts", "src/**/*.ts", "src/**/*.astro"]
+  "include": ["spotify.ts", "src/**/*.ts", "src/**/*.astro", "src/components/ChatComponent.jsx"]
 }
