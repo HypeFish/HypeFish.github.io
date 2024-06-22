@@ -1,28 +1,43 @@
 .connect4 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #004080;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .row {
-    display: flex;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #004080;
+  padding: 10px; /* Adjusted padding for better mobile compatibility */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  justify-content: center; /* Center rows horizontally */
+}
+
+.cell {
+  width: 8vmin; /* Use vmin for better responsiveness */
+  height: 8vmin; /* Use vmin for better responsiveness */
+  max-width: 50px; /* Set a maximum size */
+  max-height: 50px; /* Set a maximum size */
+  margin: 1vmin; /* Adjust margins for responsiveness */
+  background-color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cell:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 600px) {
   .cell {
-    width: 50px;
-    height: 50px;
-    margin: 5px;
-    background-color: white;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 50px; /* Fixed size for larger screens */
+    height: 50px; /* Fixed size for larger screens */
+    margin: 5px; /* Fixed margin for larger screens */
   }
-  
-  .cell:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
+}

@@ -8,7 +8,6 @@ const Chat = () => {
   const [newMessage, setNewMessage] = useState('');
 
   useEffect(() => {
-    console.log("Component mounted");
     const messagesCollection = collection(db, 'chatlog');
     const messagesQuery = query(messagesCollection, orderBy('timestamp', 'asc'));
 
@@ -19,7 +18,6 @@ const Chat = () => {
     });
 
     return () => {
-      console.log("Component unmounted");
       unsubscribe();
     };
   }, []);
@@ -31,14 +29,11 @@ const Chat = () => {
         timestamp: new Date(),
       };
 
-      // Update local state immediately
       setMessages([...messages, { id: Date.now().toString(), ...messageData }]);
       setNewMessage('');
 
       try {
-        // Add to Firestore
         await addDoc(collection(db, 'chatlog'), messageData);
-        console.log("Message added to Firestore");
       } catch (error) {
         console.error("Error adding message to Firestore:", error);
       }
