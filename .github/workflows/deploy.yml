@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -25,22 +25,40 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Print environment variables
+        run: |
+          echo "PUBLIC_VITE_FIREBASE_API_KEY=${{ secrets.PUBLIC_VITE_FIREBASE_API_KEY }}"
+          echo "PUBLIC_VITE_FIREBASE_AUTH_DOMAIN=${{ secrets.PUBLIC_VITE_FIREBASE_AUTH_DOMAIN }}"
+          echo "PUBLIC_VITE_FIREBASE_PROJECT_ID=${{ secrets.PUBLIC_VITE_FIREBASE_PROJECT_ID }}"
+          echo "PUBLIC_VITE_FIREBASE_STORAGE_BUCKET=${{ secrets.PUBLIC_VITE_FIREBASE_STORAGE_BUCKET }}"
+          echo "PUBLIC_VITE_FIREBASE_MESSAGING_SENDER_ID=${{ secrets.PUBLIC_VITE_FIREBASE_MESSAGING_SENDER_ID }}"
+          echo "PUBLIC_VITE_FIREBASE_APP_ID=${{ secrets.PUBLIC_VITE_FIREBASE_APP_ID }}"
+          echo "PUBLIC_VITE_FIREBASE_MEASUREMENT_ID=${{ secrets.PUBLIC_VITE_FIREBASE_MEASUREMENT_ID }}"
+        env:
+          PUBLIC_VITE_FIREBASE_API_KEY: ${{ secrets.PUBLIC_VITE_FIREBASE_API_KEY }}
+          PUBLIC_VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.PUBLIC_VITE_FIREBASE_AUTH_DOMAIN }}
+          PUBLIC_VITE_FIREBASE_PROJECT_ID: ${{ secrets.PUBLIC_VITE_FIREBASE_PROJECT_ID }}
+          PUBLIC_VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.PUBLIC_VITE_FIREBASE_STORAGE_BUCKET }}
+          PUBLIC_VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.PUBLIC_VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          PUBLIC_VITE_FIREBASE_APP_ID: ${{ secrets.PUBLIC_VITE_FIREBASE_APP_ID }}
+          PUBLIC_VITE_FIREBASE_MEASUREMENT_ID: ${{ secrets.PUBLIC_VITE_FIREBASE_MEASUREMENT_ID }}
+
       - name: Build the project
         run: npm run build
         env:
-          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
-          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
-          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
-          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
-          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
-          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
-          VITE_FIREBASE_MEASUREMENT_ID: ${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}
+          PUBLIC_VITE_FIREBASE_API_KEY: ${{ secrets.PUBLIC_VITE_FIREBASE_API_KEY }}
+          PUBLIC_VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.PUBLIC_VITE_FIREBASE_AUTH_DOMAIN }}
+          PUBLIC_VITE_FIREBASE_PROJECT_ID: ${{ secrets.PUBLIC_VITE_FIREBASE_PROJECT_ID }}
+          PUBLIC_VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.PUBLIC_VITE_FIREBASE_STORAGE_BUCKET }}
+          PUBLIC_VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.PUBLIC_VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          PUBLIC_VITE_FIREBASE_APP_ID: ${{ secrets.PUBLIC_VITE_FIREBASE_APP_ID }}
+          PUBLIC_VITE_FIREBASE_MEASUREMENT_ID: ${{ secrets.PUBLIC_VITE_FIREBASE_MEASUREMENT_ID }}
 
       - name: Upload site to GitHub Pages
         uses: withastro/action@v2
         with:
-          path: . # The root location of your Astro project inside the repository.
-          
+          path: .
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
