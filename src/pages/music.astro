@@ -37,14 +37,6 @@ interface PlaylistData {
 
 // Type assertion for the imported JSON data
 const playlistData = playlistDataJson as PlaylistData;
-
-// Function to shuffle and pick 10 random tracks
-function getRandomTracks(tracks: TrackItem[], count: number): TrackItem[] {
-  const shuffled = tracks.sort(() => 0.5 - Math.random());
-  return shuffled.slice(0, count);
-}
-
-const randomTracks = getRandomTracks(playlistData.tracks.items, 10);
 ---
 
 <!doctype html>
@@ -58,6 +50,7 @@ const randomTracks = getRandomTracks(playlistData.tracks.items, 10);
     <link rel="icon" sizes="192x192" href="/android-chrome-192x192.png" />
     <link rel="icon" sizes="512x512" href="/android-chrome-512x512.png" />
     <title>Music Playlist</title>
+    <script type="module" src="src/scripts/randomTracks.js"></script>
   </head>
   <body>
     <div class="wrapper">
@@ -70,42 +63,12 @@ const randomTracks = getRandomTracks(playlistData.tracks.items, 10);
           <p>
             This is my mega Spotify playlist of 1000+ songs! If you refresh,
             you'll get a new 10 songs! Some songs aren't allowed preview
-            unfortunately
+            unfortunately.
           </p>
-          {
-            randomTracks.map((trackItem) => {
-              const track = trackItem.track;
-              if (!track) return null;
-              const albumImage = track.album?.images?.[0]?.url || "";
-              const artists =
-                track.artists?.map((artist) => artist.name).join(", ") ||
-                "Unknown Artist";
-              return (
-                <div class="track">
-                  {albumImage && (
-                    <img src={albumImage} alt={`${track.name} album cover`} />
-                  )}
-                  <div class="track-info">
-                    <h3>{track.name || "Unknown Track"}</h3>
-                    <p>{artists}</p>
-                  </div>
-                  {track.preview_url && (
-                    <audio controls>
-                      <source src={track.preview_url} type="audio/mpeg" />
-                      Your browser does not support the audio element.
-                    </audio>
-                  )}
-                  <a
-                    href={track.external_urls?.spotify || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Listen on Spotify
-                  </a>
-                </div>
-              );
-            })
-          }
+          <div id="playlistData" style="display: none;">
+            {JSON.stringify(playlistData).replace(/</g, '\\u003c')}
+          </div>
+          <div id="trackList"></div>
         </section>
       </main>
       <Footer />
