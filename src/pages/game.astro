@@ -6,6 +6,7 @@ import "../styles/global.css";
 import "../components/Connect4.css";
 ---
 
+
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -22,25 +23,12 @@ import "../components/Connect4.css";
       <Header />
       <main>
         <h1>Connect 4 Game</h1>
+        <p class="description">
+          Welcome to the Connect 4 game! You will play as the red piece and move first. Your opponent is an AI, so try your best to outsmart it and connect four of your pieces in a row. Good luck!
+        </p>
         <Connect4 client:load />
       </main>
       <Footer />
     </div>
   </body>
 </html>
-
-<style>
-  .wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
-  main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-  }
-</style>
