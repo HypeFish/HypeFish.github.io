@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import TypingEffect from "../components/TypingEffect.astro";
 import { projects } from "../data/projectData.ts";
 import "../styles/global.css";
 import "../styles/project.css";
@@ -22,16 +23,27 @@ import "../styles/project.css";
     <div class="wrapper">
       <Header />
       <main>
-        <h1>My Projects</h1>
+        <h1>
+          <TypingEffect texts={["My Projects"]} speed={80} />
+        </h1>
         <section class="projects">
-          {projects.map(project => (
-            <div class="project">
-              <h2>{project.title}</h2>
-              <p>{project.description}</p>
-              <a href={project.link} target="_blank" rel="noopener noreferrer">Learn more</a>
-            </div>
-          ))}
+          {
+            projects.map((project) => (
+              <div class="project">
+                <h2>{project.title}</h2>
+                <p>{project.description}</p>
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Learn more
+                </a>
+              </div>
+            ))
+          }
         </section>
+        <p class="more-to-come">More to come...</p>
       </main>
       <Footer />
     </div>

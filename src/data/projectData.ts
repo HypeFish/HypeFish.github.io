@@ -3,19 +3,16 @@ export const projects = [
     {
       title: "Asteriods - Reinforcement Learning",
       description: "This is a project that uses the OpenAI package Gymasium, Pytorch, and Numpy to teach an Artificial Agent" +
-      "on how to play the classic arcade game Asteroids. You can watch the model play at the following link!",
+      " how to play the classic arcade game Asteroids. You can watch the model play at the following link!",
       link: "/video",
       
     },
     {
-      title: "Project Two",
-      description: "This is a brief description of Project Two. It's another amazing project that does wonderful things.",
-      link: "https://example.com/project-two"
-    },
-    {
-      title: "Project Three",
-      description: "This is a brief description of Project Three. It's yet another amazing project that does wonderful things.",
-      link: "https://example.com/project-three"
+      title: "HypeRate4Health",
+      description: "Heres a Java application that connects to the HypeRate API, which conects to heart rate monitors. The application" +
+      " opens up as a native application and it's designed to keep track of an individual's heart rate and save it to a CSV file" + 
+      " to be used in data analysis.",
+      link: "https://hyperate4health.netlify.app/"
     }
   ];
   

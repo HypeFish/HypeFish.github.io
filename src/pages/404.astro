@@ -1,0 +1,39 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+import "../styles/main.css";  // Ensure this file includes your consistent styles
+import "../styles/404.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" sizes="192x192" href="/android-chrome-192x192.png" />
+    <link rel="icon" sizes="512x512" href="/android-chrome-512x512.png" />
+    <title>Page Not Found</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <Header />
+      <main>
+        <div class="content">
+          <h1 class="font">404</h1>
+          <p>Oops! The page you are looking for does not exist.</p>
+          <p>It looks like you've taken a wrong turn. Let's get you back on track!</p>
+          <img src="/images.jpeg" alt="Funny image" class="fun-image"/>
+          <div class="home-navigation">
+            <a href="/" class="home-link">Go Back Home</a>
+            <a href="/projects" class="projects-link">See Projects</a>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>
