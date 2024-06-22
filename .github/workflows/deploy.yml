@@ -46,7 +46,7 @@ jobs:
       - name: Build the project
         run: npm run build
         env:
-          PUBLIC_VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          PUBLIC_VITE_FIREBASE_API_KEY: AIzaSyCCwyh34Fwa6xitrhqqGSx-FsH34d7DWYM
           PUBLIC_VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
           PUBLIC_VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
           PUBLIC_VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
