@@ -8,6 +8,7 @@ const Chat = () => {
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
+  const MAX_MESSAGE_LENGTH = 200;
 
   useEffect(() => {
     const messagesCollection = collection(db, 'chatlog');
@@ -36,7 +37,7 @@ const Chat = () => {
   };
 
   const sendMessage = async () => {
-    if (newMessage.trim()) {
+    if (newMessage.trim() && newMessage.length <= MAX_MESSAGE_LENGTH) {
       const messageData = {
         text: newMessage,
         timestamp: new Date(),
@@ -50,6 +51,8 @@ const Chat = () => {
       } catch (error) {
         console.error("Error adding message to Firestore:", error);
       }
+    } else if (newMessage.length > MAX_MESSAGE_LENGTH) {
+      alert(`Message is too long! Maximum length is ${MAX_MESSAGE_LENGTH} characters.`);
     }
   };
 
@@ -61,9 +64,9 @@ const Chat = () => {
   return (
     <div className="chat-room">
       <h1>Welcome to the Chat Room</h1>
-        <p>This chat room allows you to communicate with others in real-time. Feel free to join the conversation, ask questions, or share your thoughts.
-          Everything is anonymous but will be moderated.
-        </p> 
+      <p>This chat room allows you to communicate with others in real-time. Feel free to join the conversation, ask questions, or share your thoughts.
+        Everything is anonymous but will be moderated.
+      </p> 
       <div className="messages" ref={messagesContainerRef}>
         {messages.map((message) => (
           <div key={message.id} className="message">
@@ -85,6 +88,7 @@ const Chat = () => {
         value={newMessage}
         onChange={(e) => setNewMessage(e.target.value)}
         placeholder="Type a message..."
+        maxLength={MAX_MESSAGE_LENGTH}
       />
       <button onClick={sendMessage}>Send</button>
     </div>
