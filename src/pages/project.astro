@@ -4,7 +4,6 @@ import Footer from "../components/Footer.astro";
 import TypingEffect from "../components/TypingEffect.astro";
 import { projects } from "../data/projectData.ts";
 import "../styles/global.css";
-import "../styles/project.css";
 ---
 
 <!doctype html>
@@ -22,7 +21,7 @@ import "../styles/project.css";
   <body>
     <div class="wrapper">
       <Header />
-      <main>
+      <main class="main-projects">
         <h1>
           <TypingEffect texts={["My Projects"]} speed={80} />
         </h1>

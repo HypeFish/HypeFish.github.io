@@ -3,7 +3,6 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import TypingEffect from "../components/TypingEffect.astro";
 import "../styles/global.css";
-import "../styles/about.css";
 ---
 
 <!doctype html>
@@ -21,29 +20,23 @@ import "../styles/about.css";
   <body>
     <div class="wrapper">
       <Header />
-      <main>
+      <main class="main-about">
         <section class="intro">
           <TypingEffect texts={["Hello!", "My name is Skye!"]} speed={50} />
         </section>
         <section class="profile">
           <div class="profile-image">
             <img
-              src="/IMG_4361.PNG"
+              src="/minerva.png"
               alt="Profile Picture"
               class="profile-pic"
             />
-            <p class="credit">
-              Artist credit: <a
-                href="https://twitter.com/cinnotomon"
-                target="_blank"
-                rel="noopener noreferrer">@cinnotomon</a>
-            </p>
           </div>
           <div class="bio">
             <h2>About Me</h2>
             <p>
-              Hi, I'm Skye (they/them). I'm currently an intern on the Smart
-              Behaviors team at <a
+              Hi, I'm Skye (they/them). I am currently working as an AI Researcher
+              on the Smart Behaviors team at <a
                 href="https://piaggiofastforward.com/"
                 target="_blank"
                 rel="noopener noreferrer">Piaggio Fast Forward</a
@@ -54,22 +47,21 @@ import "../styles/about.css";
                 Computer science has a lot of domains I really enjoy such as: <u
                   >Machine Learning</u
                 >, <u>Reinforcement Learning</u>, <u>Systems Architecture</u>,
-                and <u>Data Analysis</u>. AI has been a recent joy of mine and
-                it's been exciting to see where it goes next! I love
-                experimenting with a variety of programming languages too, as
-                Gleam has become the next one I'm excited to learn about.
+                and <u>Data Analysis</u>. Lower level programming has been a recent
+                interest of mine as well, playing around with <b>C</b> for operating
+                systems and embedded systems. Human Robotic Interaction is another
+                field I find really interesting!
               </li>
               <br />
               <li>
-                Neuroscience has been a big passion of mine for many years as
-                the Brain is such a complex and intricate system. Through the
-                psychology of human behavior, to learning about the physical
-                brain through a clinical sense, I've much experience in this
-                field.
+                Neuroscience has been a big passion of mine for many years.
+                Human behavior is fascinating to me, and I love learning about how
+                the brain works and how we can apply that to technology like robotics.
+                Although I enjoy learning about the genetic aspects of neuroscience as well.
               </li>
               <br />
               <li>
-                Video games have been apart of my life for over 15 years! I've
+                Video games have been a part of my life for over 15 years! I've
                 continued to keep playing and keep up with my favorite
                 franchises along with also experimenting on many new ones. I've
                 developed my own games both for class work and for game jams and
@@ -77,10 +69,17 @@ import "../styles/about.css";
               </li>
               <br />
               <li>
-               I'm currently a member of a Computational Neuroscience Lab at my university
-               as well! I have a few publications in the works so stay tuned for those.
+                I've been in a few labs during my time at school, including an HCI Privacy lab,
+                a Performance Systems lab, and a Computational Neuroscience lab. I've enjoyed
+                working on research projects in these labs and collaborating with other students
+                and professors.
               </li>
             </ul>
+            <div style="margin-top: 1.5rem;">
+              <a href="resume.pdf" class="resume-button" target="_blank"
+                >Download My Resume</a
+              >
+            </div>
           </div>
         </section>
         <section class="skills">
