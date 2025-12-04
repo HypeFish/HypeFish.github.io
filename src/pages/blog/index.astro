@@ -1,0 +1,59 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import TypingEffect from "../../components/TypingEffect.astro";
+import { getCollection } from "astro:content";
+
+// Fetch all posts and sort by date (newest first)
+const allPosts = await getCollection("blog");
+const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<style>
+  .blog-intro { text-align: center; margin-bottom: 3rem; }
+  .post-list { display: grid; gap: 2rem; max-width: 800px; margin: 0 auto; }
+  
+  .post-card {
+    display: block;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+  }
+  .post-card:hover { transform: translateY(-3px); }
+  
+  .post-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem; }
+  .post-header h2 { margin: 0; font-size: 1.5rem; color: #007acc; }
+  .date { color: #888; font-size: 0.9rem; }
+  
+  .tags { margin-top: 1rem; display: flex; gap: 0.5rem; }
+  .tag { background: #f0f4f8; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; color: #555; }
+</style>
+
+<Layout title="Blog" mainClass="main-blog">
+  <section class="blog-intro">
+    <h1>
+      <TypingEffect texts={["Dev Log"]} />
+    </h1>
+    <p>Thoughts on Code, AI, Games, and More.</p>
+  </section>
+
+  <section class="post-list">
+    {sortedPosts.map((post) => (
+      <a href={`/blog/${post.slug}`} class="post-card">
+        <div class="post-header">
+          <h2>{post.data.title}</h2>
+          <span class="date">{post.data.pubDate.toLocaleDateString()}</span>
+        </div>
+        <p>{post.data.description}</p>
+        {post.data.tags && (
+          <div class="tags">
+            {post.data.tags.map(tag => <span class="tag">#{tag}</span>)}
+          </div>
+        )}
+      </a>
+    ))}
+  </section>
+</Layout>

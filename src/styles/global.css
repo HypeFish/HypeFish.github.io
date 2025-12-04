@@ -199,3 +199,23 @@ html, body {
   margin-top: 2rem;
   color: #777;
 }
+
+/* --- 5. Blog Index Styles --- */
+.main-blog {
+  flex: 1; /* This pushes the footer down */
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  max-width: 1200px; /* Match your other pages */
+  width: 100%;       /* Ensure it takes width */
+  margin: 0 auto;    /* Center it */
+  box-sizing: border-box; /* Prevent padding from breaking width */
+}
+
+/* --- 6. Blog Article Styles --- */
+.main-article {
+  flex: 1; /* This pushes the footer down */
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+}

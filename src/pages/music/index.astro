@@ -1,0 +1,54 @@
+---
+// src/pages/music.astro
+import Layout from "../../layouts/Layout.astro";
+import TypingEffect from "../../components/TypingEffect.astro";
+import PlaylistExplorer from "../../components/PlaylistExplorer";
+import { getFullPlaylist } from "../../lib/spotify";
+
+// --- FETCH DATA AT BUILD TIME ---
+// This runs on your computer/server when you type "npm run build"
+const playlistData = await getFullPlaylist();
+
+// Fallback if API fails (so build doesn't crash)
+const rawTracks = playlistData?.tracks || [];
+const playlistName = playlistData?.name || "My Playlist";
+
+// Sanitize (Your existing safety filter)
+const validTracks = rawTracks.filter((item: any) => {
+  if (!item || !item.track) return false;
+  const hasName = typeof item.track.name === 'string';
+  const hasArtist = Array.isArray(item.track.artists) && item.track.artists.length > 0;
+  return hasName && hasArtist;
+});
+---
+
+<Layout title="Music Playlist" mainClass="main-music">
+  <section class="playlist-container">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <h1>
+        <TypingEffect texts={[playlistName]} speed={60} />
+      </h1>
+      <p style="max-width: 600px; margin: 0 auto; line-height: 1.6;">
+        Welcome to my data-driven music collection! 
+        Below is an interactive explorer of my <strong>{validTracks.length}</strong> saved songs. 
+        Check out my most played artists or search for a specific vibe.
+      </p>
+    </div>
+
+    <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
+      <a href="/music/stats" style="
+        background-color: #007acc;
+        color: white;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      ">
+        📊 View Stats & Analysis
+      </a>
+    </div>
+
+    <PlaylistExplorer client:load items={validTracks} />
+  </section>
+</Layout>

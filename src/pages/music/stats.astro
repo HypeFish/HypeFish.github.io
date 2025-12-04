@@ -1,0 +1,77 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getFullPlaylist } from "../../lib/spotify";
+import StatsDashboard from "../../components/StatsDashboard";
+
+// 1. Fetch Data
+const playlist = await getFullPlaylist();
+const tracks = playlist?.tracks || [];
+
+// 2. Calculate a high-level "Obscurity Score" (0-100)
+// Lower score = More Obscure
+const totalPop = tracks.reduce((acc: number, item: any) => acc + (item.track?.popularity || 0), 0);
+const avgPop = tracks.length > 0 ? Math.round(totalPop / tracks.length) : 0;
+
+let listenerType = "Balanced Listener";
+if (avgPop < 30) listenerType = "Underground Explorer";
+else if (avgPop > 65) listenerType = "Top 40 Fan";
+
+// 3. Format page title
+const pageTitle = `Stats: ${playlist?.name || "My Music"}`;
+---
+
+<Layout title="Music Analysis" mainClass="main-stats">
+  <div style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
+    
+    {/* Header Section */}
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <h1 style="font-size: 3rem; margin-bottom: 0.5rem;">Music DNA 🧬</h1>
+      <p style="font-size: 1.2rem; color: #666;">
+        Analyzing <strong>{tracks.length}</strong> tracks from my collection.
+      </p>
+      
+      {/* The "Vibe Score" Card */}
+      <div style={{
+        background: 'linear-gradient(135deg, #007acc 0%, #00d2ff 100%)',
+        color: 'white',
+        padding: '2rem',
+        borderRadius: '16px',
+        marginTop: '2rem',
+        display: 'inline-block',
+        boxShadow: '0 10px 20px rgba(0, 122, 204, 0.3)'
+      }}>
+        <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">
+          Collection Mainstream Score
+        </div>
+        <div style="font-size: 3.5rem; font-weight: bold; line-height: 1;">
+          {avgPop}<span style="font-size: 1.5rem; opacity: 0.8;">/100</span>
+        </div>
+        <div style="margin-top: 0.5rem; font-weight: 500; font-size: 1.2rem;">
+          verdict: {listenerType}
+        </div>
+      </div>
+    </div>
+
+    {/* The Interactive Charts */}
+    <StatsDashboard client:only="react" tracks={tracks} />
+
+    {/* Footer Navigation */}
+    <div style="text-align: center; margin-top: 4rem;">
+      <a 
+        href="/music" 
+        style={{
+          display: 'inline-block',
+          padding: '0.8rem 2rem',
+          backgroundColor: '#333',
+          color: 'white',
+          textDecoration: 'none',
+          borderRadius: '30px',
+          fontWeight: 'bold',
+          transition: 'transform 0.2s'
+        }}
+      >
+        ← Back to Playlist Explorer
+      </a>
+    </div>
+  </div>
+</Layout>

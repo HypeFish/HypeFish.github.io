@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+// 1. Generate a new path for every collection entry
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+// 2. Get the specific post data
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<Layout title={entry.data.title} mainClass="main-article">
+  <article class="blog-post">
+    <header>
+      <h1>{entry.data.title}</h1>
+      <p class="meta">Published on {entry.data.pubDate.toLocaleDateString()}</p>
+    </header>
+    
+    <div class="content">
+      <Content />
+    </div>
+
+    <div class="back-link">
+      <a href="/blog">← Back to Index</a>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .blog-post { max-width: 700px; margin: 0 auto; background: #fff; padding: 3rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+  header { margin-bottom: 2rem; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 2rem; }
+  h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .meta { color: #888; }
+  
+  /* Make the markdown content look good */
+  .content { line-height: 1.8; font-size: 1.1rem; color: #333; }
+  .content :global(h2) { margin-top: 2rem; color: #111; }
+  .content :global(p) { margin-bottom: 1.5rem; }
+  .content :global(code) { background: #f4f4f4; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace; }
+  
+  .back-link { margin-top: 3rem; text-align: center; }
+  .back-link a { color: #007acc; text-decoration: none; font-weight: bold; }
+</style>

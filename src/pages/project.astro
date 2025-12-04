@@ -1,50 +1,31 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
+import Layout from "../layouts/Layout.astro";
 import TypingEffect from "../components/TypingEffect.astro";
 import { projects } from "../data/projectData.ts";
-import "../styles/global.css";
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="icon" sizes="192x192" href="/android-chrome-192x192.png" />
-    <link rel="icon" sizes="512x512" href="/android-chrome-512x512.png" />
-    <title>Projects</title>
-  </head>
-  <body>
-    <div class="wrapper">
-      <Header />
-      <main class="main-projects">
-        <h1>
-          <TypingEffect texts={["My Projects"]} speed={80} />
-        </h1>
-        <section class="projects">
-          {
-            projects.map((project) => (
-              <div class="project">
-                <h2>{project.title}</h2>
-                <p>{project.description}</p>
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Learn more
-                </a>
-              </div>
-            ))
-          }
-        </section>
-        <p class="more-to-come">More to come...</p>
-      </main>
-      <Footer />
-    </div>
-  </body>
-</html>
+<Layout title="Projects" mainClass="main-projects">
+  <h1>
+    <TypingEffect texts={["My Projects"]} speed={80} />
+  </h1>
+  <section class="projects">
+    {
+      projects.map((project) => (
+        <div class="project">
+          <h2>{project.title}</h2>
+          <p>{project.description}</p>
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Check it out!
+          </a>
+        </div>
+      ))
+    }
+  </section>
+  <div class="more-to-come">
+    <p>More to come soon!</p>
+  </div>
+</Layout>

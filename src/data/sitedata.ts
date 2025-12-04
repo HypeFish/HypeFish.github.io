@@ -1,3 +1,4 @@
+// src/data/sitedata.ts
 export const Site = {
   title: "HypeFish",
   description: "Welcome to HypeFish's personal website.",
@@ -9,10 +10,8 @@ export const Site = {
 };
 
 export const Navigation = [
-  { name: "About", link: "/about" },
-  { name: "Project", link: "/project" },
+  { name: "Projects", link: "/project" },
+  { name: "Blog", link: "/blog" }, 
   { name: "Music", link: "/music" },
-  { name: "Chat Room", link: "/chat" },
   { name: "Game", link: "/game" },
 ];
-

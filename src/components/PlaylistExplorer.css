@@ -1,0 +1,108 @@
+/* src/components/PlaylistExplorer.css */
+.playlist-explorer {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Stats Panel */
+.stats-panel {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.top-artists {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.artist-badge {
+  background: #f0f4f8;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.rank { font-weight: bold; color: #007acc; margin-right: 0.5rem; }
+.count { color: #666; font-size: 0.8em; margin-left: 0.5rem; }
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.search-bar {
+  padding: 0.8rem;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.shuffle-btn, .load-more-btn {
+  padding: 0.8rem 1.5rem;
+  background-color: #007acc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.shuffle-btn:hover, .load-more-btn:hover { background-color: #005f99; }
+
+/* Grid */
+.track-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.track-card {
+  text-decoration: none;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.track-card:hover { transform: translateY(-5px); }
+
+.track-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.track-info {
+  padding: 0.8rem;
+}
+
+.track-name {
+  font-weight: bold;
+  color: #333;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.artist-name { color: #666; font-size: 0.85rem; }
+.load-more-btn { display: block; margin: 0 auto; }
