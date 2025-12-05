@@ -69,6 +69,17 @@ const CustomTooltip = ({ active, payload }: any) => {
 };
 
 const StatsDashboard: React.FC<StatsDashboardProps> = ({ tracks }) => {
+
+  if (tracks.length > 0 && !tracks[0].audio) {
+    return (
+      <div style={{ color: 'red', padding: '2rem', border: '2px solid red' }}>
+        <h2>⚠️ DATA ERROR</h2>
+        <p>Tracks loaded, but <strong>Audio Features are missing.</strong></p>
+        <p>This means your spotify.ts script failed to fetch the extra data.</p>
+        <p><strong>Solution:</strong> Delete <code>.spotify-cache.json</code> and restart the server.</p>
+      </div>
+    );
+  }
   
   // --- DATA 1: DECADES (Bar Chart) ---
   const decadeData = useMemo(() => {
