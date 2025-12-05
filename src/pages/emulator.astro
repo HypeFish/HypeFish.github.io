@@ -1,0 +1,40 @@
+---
+// src/pages/emulator.astro
+import Layout from "../layouts/Layout.astro";
+import Emulator from "../components/Emulator.jsx"; // Adjust extension if you used .tsx
+---
+
+<Layout title="Chip-8 Emulator" mainClass="main-emulator">
+  <div class="emulator-intro">
+    <h1>Chip-8 Emulator</h1>
+    <p>A low-level system emulator written in TypeScript.</p>
+    <p class="specs">CPU: 4KB Mem | 16 Registers | 64x32 Display</p>
+  </div>
+
+  <Emulator client:only="react" />
+
+  <div class="controls-hint">
+    <p>Status: <span style="color: #0015ffff;">Active</span> (Waiting for ROM)</p>
+  </div>
+</Layout>
+
+<style>
+  .emulator-intro {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .specs {
+    font-family: monospace;
+    color: var(--secondary-text);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+
+  .controls-hint {
+    text-align: center;
+    margin-top: 2rem;
+    font-family: monospace;
+    color: var(--secondary-text);
+  }
+</style>

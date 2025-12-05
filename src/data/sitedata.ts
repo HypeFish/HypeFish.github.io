@@ -13,5 +13,6 @@ export const Navigation = [
   { name: "Projects", link: "/project" },
   { name: "Blog", link: "/blog" }, 
   { name: "Music", link: "/music" },
+  { name: "CPU", link: "/emulator" },
   { name: "Game", link: "/game" },
 ];
