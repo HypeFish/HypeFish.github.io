@@ -1,16 +1,45 @@
 /* [File: src/styles/global.css] */
 
-/* --- 1. Base Reset & Layout (formerly global.css) --- */
+/* src/styles/global.css */
+:root {
+  --bg-color: #f4f4f4;
+  --text-color: #333;
+  --accent-color: #007acc;
+  --card-bg: #fff;
+  --border-color: #ccc;
+  --secondary-text: #666;
+}
+
+[data-theme="dark"] {
+  --bg-color: #1a1a1a;
+  --text-color: #e0e0e0;
+  --accent-color: #4da6ff; /* Lighter blue for dark mode */
+  --card-bg: #2b2b2b;
+  --border-color: #444;
+  --secondary-text: #aaa;
+}
+
 html, body {
   height: 100%;
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
+  background-color: var(--bg-color); /* Changed */
+  color: var(--text-color);          /* Changed */
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth toggle */
 }
+
+/* Update your other classes to use variables */
+/* Example for your cards/projects: */
+.project, .stat-card, .blog-post, .post-card, .track-card {
+  background-color: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+/* Example for links */
+a { color: var(--accent-color); }
 
 .wrapper {
   display: flex;

@@ -2,8 +2,6 @@
 import { Site, Navigation } from "../data/sitedata.ts";
 import "../styles/header.css";
 import "../styles/nav.css";
-
-// If you have props or state, you can define them here
 const { title = Site.title} = Astro.props;
 ---
 
@@ -21,14 +19,80 @@ const { title = Site.title} = Astro.props;
             </a>
           </li>
         ))}
+        <li>
+          <button id="theme-toggle" class="nav-button" aria-label="Toggle Dark Mode">
+            🌙
+          </button>
+        </li>
       </ul>
     </div>
-    <pre class="ascii-art">
-      __
-     ( o`-
-     /  \
-     |  |
-      ^^
-    </pre>
-  </nav>
+    </nav>
 </header>
+
+<script is:inline>
+  // 1. Define the logic to get and apply the theme
+  const applyTheme = () => {
+    const theme = (() => {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+        return localStorage.getItem('theme');
+      }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
+    })();
+
+    if (theme === 'light') {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    
+    // Also ensure the button icon is correct
+    const btn = document.getElementById("theme-toggle");
+    if (btn) {
+      btn.innerText = theme === 'dark' ? "☀️" : "🌙";
+    }
+  };
+
+  // 2. Run on initial load
+  applyTheme();
+
+  // 3. Handle Click
+  const handleToggleClick = () => {
+    const element = document.documentElement;
+    const isDark = element.getAttribute("data-theme") === "dark";
+    const newTheme = isDark ? "light" : "dark";
+    
+    if (newTheme === 'light') {
+      element.removeAttribute('data-theme');
+    } else {
+      element.setAttribute('data-theme', 'dark');
+    }
+    
+    localStorage.setItem("theme", newTheme);
+    
+    // Update button icon
+    const btn = document.getElementById("theme-toggle");
+    if(btn) btn.innerText = isDark ? "🌙" : "☀️"; // If it was dark (sun), now light (moon)
+  };
+
+  // 4. Attach Event Listeners (Run this every time navigation completes)
+  const attachEvents = () => {
+    const btn = document.getElementById("theme-toggle");
+    if (btn) {
+      // Remove old listener to be safe, then add new one
+      btn.removeEventListener("click", handleToggleClick); 
+      btn.addEventListener("click", handleToggleClick);
+    }
+  };
+
+  // Run once on load
+  attachEvents();
+
+  // 5. CRITICAL: Re-apply theme and events after View Transition
+  document.addEventListener('astro:after-swap', () => {
+    applyTheme();   // <--- This ensures the dark mode persists!
+    attachEvents(); // <--- This ensures the button keeps working
+  });
+</script>

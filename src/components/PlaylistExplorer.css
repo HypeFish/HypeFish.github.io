@@ -7,12 +7,14 @@
 
 /* Stats Panel */
 .stats-panel {
-  background: #fff;
+  background-color: var(--card-bg); /* Changed from #fff */
+  color: var(--text-color);         /* Added */
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 2rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .top-artists {
@@ -24,15 +26,26 @@
 }
 
 .artist-badge {
-  background: #f0f4f8;
+  background-color: var(--bg-color); /* Changed from #f0f4f8 (uses page background now) */
+  border: 1px solid var(--border-color); /* Added border for contrast */
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.9rem;
-  color: #333;
+  color: var(--text-color); /* Changed from #333 */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.rank { font-weight: bold; color: #007acc; margin-right: 0.5rem; }
-.count { color: #666; font-size: 0.8em; margin-left: 0.5rem; }
+.rank { 
+  font-weight: bold; 
+  color: var(--accent-color); /* Changed from #007acc */
+  margin-right: 0.5rem; 
+}
+
+.count { 
+  color: var(--secondary-text); /* Changed from #666 */
+  font-size: 0.8em; 
+  margin-left: 0.5rem; 
+}
 
 /* Controls */
 .controls {
@@ -40,28 +53,34 @@
   gap: 1rem;
   margin-bottom: 2rem;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .search-bar {
   padding: 0.8rem;
   width: 100%;
   max-width: 400px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color); /* Changed */
   border-radius: 8px;
   font-size: 1rem;
+  background-color: var(--card-bg);      /* Changed */
+  color: var(--text-color);              /* Changed */
 }
 
 .shuffle-btn, .load-more-btn {
   padding: 0.8rem 1.5rem;
-  background-color: #007acc;
-  color: white;
+  background-color: var(--accent-color); /* Changed */
+  color: white; /* Keep white for button text usually */
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s;
+  font-weight: bold;
 }
 
-.shuffle-btn:hover, .load-more-btn:hover { background-color: #005f99; }
+.shuffle-btn:hover, .load-more-btn:hover {
+  opacity: 0.9;
+}
 
 /* Grid */
 .track-grid {
@@ -73,16 +92,18 @@
 
 .track-card {
   text-decoration: none;
-  background: #fff;
+  background-color: var(--card-bg); /* Changed */
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+  transition: transform 0.2s, background-color 0.3s ease;
   display: flex;
   flex-direction: column;
 }
 
-.track-card:hover { transform: translateY(-5px); }
+.track-card:hover { 
+  transform: translateY(-5px); 
+}
 
 .track-card img {
   width: 100%;
@@ -96,7 +117,7 @@
 
 .track-name {
   font-weight: bold;
-  color: #333;
+  color: var(--text-color); /* Changed */
   font-size: 0.95rem;
   margin-bottom: 0.3rem;
   overflow: hidden;
@@ -104,5 +125,12 @@
   white-space: nowrap;
 }
 
-.artist-name { color: #666; font-size: 0.85rem; }
-.load-more-btn { display: block; margin: 0 auto; }
+.artist-name { 
+  color: var(--secondary-text); /* Changed */
+  font-size: 0.85rem; 
+}
+
+.load-more-btn { 
+  display: block; 
+  margin: 0 auto; 
+}

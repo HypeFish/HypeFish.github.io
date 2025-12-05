@@ -13,7 +13,7 @@ interface StatsDashboardProps {
 // 1. Helper Component for the "Hall of Fame" Cards
 const StatCard = ({ label, track, color, metric }: any) => (
   <div style={{ 
-    background: '#fff', 
+    background: 'var(--card-bg)', 
     padding: '1.5rem', 
     borderRadius: '12px', 
     boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
@@ -22,9 +22,10 @@ const StatCard = ({ label, track, color, metric }: any) => (
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    height: '100%'
+    height: '100%',
+    color: 'var(--text-color)'
   }}>
-    <h4 style={{ margin: '0 0 1rem 0', color: '#555', textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '1px' }}>{label}</h4>
+    <h4 style={{ margin: '0 0 1rem 0', color: 'var(--secondary-text)', textTransform: 'uppercase', fontSize: '0.8rem', letterSpacing: '1px' }}>{label}</h4>
     {track ? (
       <>
         <img 
@@ -33,16 +34,17 @@ const StatCard = ({ label, track, color, metric }: any) => (
             style={{ width: '80px', height: '80px', borderRadius: '4px', marginBottom: '1rem', objectFit: 'cover' }} 
         />
         <div style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '0.25rem' }}>{track.name}</div>
-        <div style={{ fontSize: '0.9rem', color: '#666', marginBottom: '0.5rem' }}>{track.artists[0].name}</div>
+        <div style={{ fontSize: '0.9rem', color: 'var(--secondary-text)', marginBottom: '0.5rem' }}>{track.artists[0].name}</div>
         <div style={{ 
             display: 'inline-block', 
             padding: '0.25rem 0.5rem', 
-            background: '#f4f4f4', 
+            background: 'var(--bg-color)', 
             borderRadius: '4px', 
             fontSize: '0.8rem',
             fontWeight: 'bold',
-            color: '#333',
-            marginTop: 'auto'
+            color: 'var(--text-color)',
+            marginTop: 'auto',
+            border: '1px solid var(--border-color)'
         }}>
             {metric}
         </div>
@@ -56,10 +58,10 @@ const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
-      <div style={{ backgroundColor: '#2b2b2b', color: '#fff', padding: '10px', borderRadius: '5px', border: '1px solid #444' }}>
+      <div style={{ backgroundColor: 'var(--card-bg)', color: 'var(--text-color)', padding: '10px', borderRadius: '5px', border: '1px solid var(--border-color)' }}>
         <p style={{ fontWeight: 'bold', margin: 0 }}>{data.name}</p>
         <p style={{ fontSize: '0.8rem', margin: 0, opacity: 0.8 }}>{data.artist}</p>
-        <p style={{ fontSize: '0.7rem', margin: '5px 0 0 0', color: '#aaa' }}>
+        <p style={{ fontSize: '0.7rem', margin: '5px 0 0 0', color: 'var(--secondary-text)' }}>
           Mood: {Math.round(data.valence * 100)}% Happy / {Math.round(data.energy * 100)}% Energetic
         </p>
       </div>
@@ -69,17 +71,6 @@ const CustomTooltip = ({ active, payload }: any) => {
 };
 
 const StatsDashboard: React.FC<StatsDashboardProps> = ({ tracks }) => {
-
-  if (tracks.length > 0 && !tracks[0].audio) {
-    return (
-      <div style={{ color: 'red', padding: '2rem', border: '2px solid red' }}>
-        <h2>⚠️ DATA ERROR</h2>
-        <p>Tracks loaded, but <strong>Audio Features are missing.</strong></p>
-        <p>This means your spotify.ts script failed to fetch the extra data.</p>
-        <p><strong>Solution:</strong> Delete <code>.spotify-cache.json</code> and restart the server.</p>
-      </div>
-    );
-  }
   
   // --- DATA 1: DECADES (Bar Chart) ---
   const decadeData = useMemo(() => {
@@ -118,12 +109,10 @@ const StatsDashboard: React.FC<StatsDashboardProps> = ({ tracks }) => {
   const extremes = useMemo(() => {
     if (tracks.length === 0) return null;
     
-    // Sort by popularity
     const sortedByPop = [...tracks].sort((a, b) => 
       (a.track?.popularity || 0) - (b.track?.popularity || 0)
     );
 
-    // Sort by Date
     const sortedByDate = [...tracks].sort((a, b) => {
       const dateA = new Date(a.track?.album?.release_date || 0).getTime();
       const dateB = new Date(b.track?.album?.release_date || 0).getTime();
@@ -196,10 +185,10 @@ const StatsDashboard: React.FC<StatsDashboardProps> = ({ tracks }) => {
             <BarChart data={decadeData}>
               <XAxis dataKey="name" stroke="#8884d8" />
               <YAxis />
-              <Tooltip cursor={{ fill: 'rgba(255,255,255,0.1)' }} contentStyle={{ backgroundColor: '#333', borderRadius: '8px', color: '#fff' }} />
-              <Bar dataKey="count" fill="#007acc" radius={[4, 4, 0, 0]}>
+              <Tooltip cursor={{ fill: 'var(--bg-color)' }} contentStyle={{ backgroundColor: 'var(--card-bg)', borderRadius: '8px', color: 'var(--text-color)', border: '1px solid var(--border-color)' }} />
+              <Bar dataKey="count" fill="var(--accent-color)" radius={[4, 4, 0, 0]}>
                 {decadeData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={index % 2 === 0 ? '#007acc' : '#005f99'} />
+                  <Cell key={`cell-${index}`} fill={index % 2 === 0 ? 'var(--accent-color)' : '#005f99'} />
                 ))}
               </Bar>
             </BarChart>
@@ -210,13 +199,13 @@ const StatsDashboard: React.FC<StatsDashboardProps> = ({ tracks }) => {
       {/* --- SECTION 2: POPULARITY (Bar Chart) --- */}
       <div className="chart-section" style={{ marginBottom: '4rem' }}>
         <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>🌊 The Mainstream Meter</h2>
-        <p style={{ textAlign: 'center', color: '#666', marginBottom: '1rem' }}>(0 = Obscure, 100 = Top 40)</p>
+        <p style={{ textAlign: 'center', color: 'var(--secondary-text)', marginBottom: '1rem' }}>(0 = Obscure, 100 = Top 40)</p>
         <div style={{ height: '300px', width: '100%', minHeight: '300px' }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={popularityData}>
               <XAxis dataKey="name" stroke="#82ca9d" />
               <YAxis />
-              <Tooltip cursor={{ fill: 'rgba(255,255,255,0.1)' }} contentStyle={{ backgroundColor: '#333', borderRadius: '8px', color: '#fff' }} />
+              <Tooltip cursor={{ fill: 'var(--bg-color)' }} contentStyle={{ backgroundColor: 'var(--card-bg)', borderRadius: '8px', color: 'var(--text-color)', border: '1px solid var(--border-color)' }} />
               <Bar dataKey="count" fill="#82ca9d" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
@@ -224,40 +213,43 @@ const StatsDashboard: React.FC<StatsDashboardProps> = ({ tracks }) => {
       </div>
 
       {/* --- SECTION 3: AUDIO FEATURES (Radar & Scatter) --- */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginBottom: '4rem' }}>
-        
-        {/* Sonic Fingerprint */}
-        <div style={{ textAlign: 'center' }}>
-          <h2 style={{ marginBottom: '0.5rem' }}>🕸️ Sonic Fingerprint</h2>
-          <div style={{ height: '350px', width: '100%', minHeight: '350px' }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
-                <PolarGrid stroke="#e0e0e0" />
-                <PolarAngleAxis dataKey="subject" tick={{ fill: '#666', fontSize: 12 }} />
-                <PolarRadiusAxis angle={30} domain={[0, 1]} tick={false} axisLine={false} />
-                <Radar name="My Library" dataKey="A" stroke="#8884d8" strokeWidth={3} fill="#8884d8" fillOpacity={0.4} />
-                <Tooltip />
-              </RadarChart>
-            </ResponsiveContainer>
+      {/* CONDITIONAL RENDER: Only show this section if radarData has valid entries */}
+      {radarData.length > 0 && (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', marginBottom: '4rem' }}>
+          
+          {/* Sonic Fingerprint */}
+          <div style={{ textAlign: 'center' }}>
+            <h2 style={{ marginBottom: '0.5rem' }}>🕸️ Sonic Fingerprint</h2>
+            <div style={{ height: '350px', width: '100%', minHeight: '350px' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarData}>
+                  <PolarGrid stroke="var(--border-color)" />
+                  <PolarAngleAxis dataKey="subject" tick={{ fill: 'var(--secondary-text)', fontSize: 12 }} />
+                  <PolarRadiusAxis angle={30} domain={[0, 1]} tick={false} axisLine={false} />
+                  <Radar name="My Library" dataKey="A" stroke="#8884d8" strokeWidth={3} fill="#8884d8" fillOpacity={0.4} />
+                  <Tooltip contentStyle={{ backgroundColor: 'var(--card-bg)', borderRadius: '8px', color: 'var(--text-color)', border: '1px solid var(--border-color)' }}/>
+                </RadarChart>
+              </ResponsiveContainer>
+            </div>
           </div>
-        </div>
 
-        {/* Mood Map */}
-        <div style={{ textAlign: 'center' }}>
-          <h2 style={{ marginBottom: '0.5rem' }}>🌌 Mood Map</h2>
-          <div style={{ height: '350px', width: '100%', minHeight: '350px', background: '#f9f9f9', borderRadius: '12px', padding: '10px' }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }}>
-                <XAxis type="number" dataKey="x" name="Happiness" domain={[0, 1]} tick={false} label={{ value: 'Sad → Happy', position: 'bottom', offset: 0 }} />
-                <YAxis type="number" dataKey="y" name="Energy" domain={[0, 1]} tick={false} label={{ value: 'Chill → Intense', angle: -90, position: 'insideLeft' }} />
-                <ZAxis type="number" range={[20, 20]} />
-                <Tooltip content={<CustomTooltip />} />
-                <Scatter name="Songs" data={scatterData} fill="#007acc" fillOpacity={0.6} />
-              </ScatterChart>
-            </ResponsiveContainer>
+          {/* Mood Map */}
+          <div style={{ textAlign: 'center' }}>
+            <h2 style={{ marginBottom: '0.5rem' }}>🌌 Mood Map</h2>
+            <div style={{ height: '350px', width: '100%', minHeight: '350px', background: 'var(--card-bg)', borderRadius: '12px', padding: '10px' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }}>
+                  <XAxis type="number" dataKey="x" name="Happiness" domain={[0, 1]} tick={false} label={{ value: 'Sad → Happy', position: 'bottom', offset: 0 }} />
+                  <YAxis type="number" dataKey="y" name="Energy" domain={[0, 1]} tick={false} label={{ value: 'Chill → Intense', angle: -90, position: 'insideLeft' }} />
+                  <ZAxis type="number" range={[20, 20]} />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Scatter name="Songs" data={scatterData} fill="var(--accent-color)" fillOpacity={0.6} />
+                </ScatterChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* --- SECTION 4: HALL OF FAME (Cards) --- */}
       <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>🏆 Collection Superlatives</h2>
