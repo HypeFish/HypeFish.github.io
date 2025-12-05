@@ -19,7 +19,7 @@ const { Content } = await entry.render();
   <article class="blog-post">
     <header>
       <h1>{entry.data.title}</h1>
-      <p class="meta">Published on {entry.data.pubDate.toLocaleDateString()}</p>
+      <p class="meta">Published on {entry.data.pubDate.toLocaleDateString('en-US', { timeZone: 'UTC' })}</p>
     </header>
     
     <div class="content">
@@ -33,17 +33,65 @@ const { Content } = await entry.render();
 </Layout>
 
 <style>
-  .blog-post { max-width: 700px; margin: 0 auto; background: #fff; padding: 3rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-  header { margin-bottom: 2rem; text-align: center; border-bottom: 1px solid #eee; padding-bottom: 2rem; }
-  h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-  .meta { color: #888; }
+  .blog-post { 
+    max-width: 700px; 
+    margin: 0 auto; 
+    background-color: var(--card-bg);
+    padding: 3rem; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+    color: var(--text-color);
+  }
   
-  /* Make the markdown content look good */
-  .content { line-height: 1.8; font-size: 1.1rem; color: #333; }
-  .content :global(h2) { margin-top: 2rem; color: #111; }
+  header { 
+    margin-bottom: 2rem; 
+    text-align: center; 
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 2rem; 
+  }
+  
+  h1 { 
+    font-size: 2.5rem; 
+    margin-bottom: 0.5rem; 
+    /* CHANGED: Uses accent color (Blue) instead of plain text color */
+    color: var(--accent-color); 
+  }
+  
+  .meta { color: var(--secondary-text); }
+  
+  .content { 
+    line-height: 1.8; 
+    font-size: 1.1rem; 
+    color: var(--text-color);
+  }
+  
+  .content :global(h2) { 
+    margin-top: 2rem; 
+    color: var(--accent-color); /* Optional: Headers inside the post are also blue now */
+  }
+  
   .content :global(p) { margin-bottom: 1.5rem; }
-  .content :global(code) { background: #f4f4f4; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace; }
   
+  .content :global(code) { 
+    background-color: var(--bg-color);
+    padding: 0.2rem 0.4rem; 
+    border-radius: 4px; 
+    font-family: monospace; 
+    color: var(--accent-color);
+  }
+  
+  .content :global(pre) {
+    background-color: #1e1e1e !important;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+  }
+
   .back-link { margin-top: 3rem; text-align: center; }
-  .back-link a { color: #007acc; text-decoration: none; font-weight: bold; }
+  
+  .back-link a { 
+    color: var(--accent-color); 
+    text-decoration: none; 
+    font-weight: bold; 
+  }
 </style>

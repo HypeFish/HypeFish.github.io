@@ -1,12 +1,109 @@
 ---
-import {Site} from "../data/sitedata.ts";
-import "../styles/footer.css";
+const year = new Date().getFullYear();
+import "../styles/global.css";
 ---
 
 <footer>
-  <p>&copy; 2024 - 2025 {Site.author}. All rights reserved.</p>
-  <p>
-    <a href={Site.socialMedia.twitter}>Twitter</a> | 
-    <a href={Site.socialMedia.github}>GitHub</a> 
-  </p>
+  <div class="footer-content">
+    
+    <div class="telemetry">
+      <div class="status-item">
+        <span class="status-dot"></span>
+        <span>SYSTEM: ONLINE</span>
+      </div>
+      <div class="status-item hide-mobile">
+        <span>LATENCY:</span>
+        <span id="latency-val">24ms</span>
+      </div>
+      <div class="status-item hide-mobile">
+        <span>MEM:</span>
+        <span id="mem-val">42%</span>
+      </div>
+    </div>
+
+    <div class="terminal hint">Press ~ to open terminal</div>
+
+    <div class="copyright">
+      <span>v1.0.4</span>
+      <span class="separator">|</span>
+      <span>&copy; {year} HypeFish</span>
+    </div>
+
+  </div>
 </footer>
+
+<script>
+  // Tiny script to simulate live hardware stats
+  const updateStats = () => {
+    const latency = Math.floor(Math.random() * 30) + 10; // 10-40ms
+    const mem = Math.floor(Math.random() * 10) + 30;     // 30-40%
+    
+    const latEl = document.getElementById('latency-val');
+    const memEl = document.getElementById('mem-val');
+    
+    if (latEl) latEl.innerText = `${latency}ms`;
+    if (memEl) memEl.innerText = `${mem}%`;
+  };
+
+  // Update every 2 seconds
+  setInterval(updateStats, 2000);
+</script>
+
+<style>
+  footer {
+    border-top: 1px solid var(--border-color);
+    background-color: var(--card-bg);
+    padding: 0.8rem 0;
+    margin-top: auto; /* Pushes to bottom if using flex column layout */
+    font-family: 'Courier New', Courier, monospace; /* Terminal font */
+    font-size: 0.85rem;
+    color: var(--secondary-text);
+  }
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .telemetry {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .status-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* The blinking green dot */
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #00ff00; /* Hardware green */
+    border-radius: 50%;
+    box-shadow: 0 0 5px #00ff00;
+    animation: blink 2s infinite;
+  }
+
+  .copyright {
+    display: flex;
+    gap: 0.5rem;
+    opacity: 0.7;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  @media (max-width: 600px) {
+    .hide-mobile {
+      display: none;
+    }
+  }
+</style>

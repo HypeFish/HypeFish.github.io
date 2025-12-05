@@ -10,26 +10,59 @@ const sortedPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pu
 
 <style>
   .blog-intro { text-align: center; margin-bottom: 3rem; }
-  .post-list { display: grid; gap: 2rem; max-width: 800px; margin: 0 auto; }
+  
+  .post-list { 
+    display: grid; 
+    gap: 2rem; 
+    max-width: 800px; 
+    margin: 0 auto; 
+  }
   
   .post-card {
     display: block;
-    background: #fff;
+    background-color: var(--card-bg); /* Changed */
     padding: 2rem;
     border-radius: 8px;
     text-decoration: none;
-    color: inherit;
+    color: var(--text-color);         /* Changed */
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
+    transition: transform 0.2s, background-color 0.3s ease;
   }
+  
   .post-card:hover { transform: translateY(-3px); }
   
-  .post-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem; }
-  .post-header h2 { margin: 0; font-size: 1.5rem; color: #007acc; }
-  .date { color: #888; font-size: 0.9rem; }
+  .post-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: baseline; 
+    margin-bottom: 0.5rem; 
+  }
   
-  .tags { margin-top: 1rem; display: flex; gap: 0.5rem; }
-  .tag { background: #f0f4f8; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; color: #555; }
+  .post-header h2 { 
+    margin: 0; 
+    font-size: 1.5rem; 
+    color: var(--accent-color); /* Changed */
+  }
+  
+  .date { 
+    color: var(--secondary-text); /* Changed */
+    font-size: 0.9rem; 
+  }
+  
+  .tags { 
+    margin-top: 1rem; 
+    display: flex; 
+    gap: 0.5rem; 
+  }
+  
+  .tag { 
+    background-color: var(--bg-color); /* Changed (creates an 'inset' look) */
+    padding: 0.2rem 0.6rem; 
+    border-radius: 4px; 
+    font-size: 0.8rem; 
+    color: var(--text-color);          /* Changed */
+    border: 1px solid var(--border-color); /* Optional: adds definition */
+  }
 </style>
 
 <Layout title="Blog" mainClass="main-blog">
