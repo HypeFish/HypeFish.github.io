@@ -6,6 +6,11 @@ import { ViewTransitions } from 'astro:transitions';
 import DevTerminal from "../components/DevTerminal.jsx"; // Import the terminal
 import "../styles/global.css";
 
+interface Props {
+  title: string;
+  mainClass?: string;
+}
+
 const { title, mainClass } = Astro.props;
 ---
 
