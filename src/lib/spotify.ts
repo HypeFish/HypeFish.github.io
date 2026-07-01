@@ -56,7 +56,7 @@ export async function getFullPlaylist() {
       if (!response.body.items.length) {
         keepFetching = false;
       } else {
-        const validItems = response.body.items.filter(i => i.track && i.track.id);
+        const validItems = response.body.items.filter((item: any) => item.track && item.track.id);
         allTracks = [...allTracks, ...validItems];
         offset += limit;
       }
@@ -80,7 +80,7 @@ export async function getFullPlaylist() {
         const res = await spotifyApi.getAudioFeaturesForTracks(batch);
         
         if (res.body.audio_features) {
-          const validFeatures = res.body.audio_features.filter(f => f !== null);
+          const validFeatures = res.body.audio_features.filter((feature: any) => feature !== null);
           allFeatures.push(...validFeatures);
           // console.log(`   - Batch ${i} success (${validFeatures.length} features)`);
         }

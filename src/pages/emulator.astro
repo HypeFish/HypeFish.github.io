@@ -1,7 +1,7 @@
 ---
 // src/pages/emulator.astro
 import Layout from "../layouts/Layout.astro";
-import Emulator from "../components/Emulator.jsx"; // Adjust extension if you used .tsx
+import Chip8Emulator from "../components/Emulator.jsx"; // Adjust extension if you used .tsx
 ---
 
 <Layout title="Chip-8 Emulator" mainClass="main-emulator">
@@ -11,10 +11,12 @@ import Emulator from "../components/Emulator.jsx"; // Adjust extension if you us
     <p class="specs">CPU: 4KB Mem | 16 Registers | 64x32 Display</p>
   </div>
 
-  <Emulator client:only="react" />
+  <Chip8Emulator client:only="react" />
 
   <div class="controls-hint">
-    <p>Status: <span style="color: #0015ffff;">Active</span> (Waiting for ROM)</p>
+    <p>
+      Status: <span style="color: #0015ffff;">Active</span> (Waiting for ROM)
+    </p>
   </div>
 </Layout>
 

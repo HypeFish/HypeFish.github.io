@@ -1,26 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import './Connect4.css';
 
+const ROWS = 6;
+const COLS = 7;
+const HUMAN_PLAYER = 'Yellow';
+const AI_PLAYER = 'Red';
+const DIFFICULTY_LEVELS = {
+  easy: { label: 'Easy', depth: 2 },
+  medium: { label: 'Normal', depth: 4 },
+  hard: { label: 'Hard', depth: 6 },
+};
+
 const Connect4 = () => {
-  const rows = 6;
-  const cols = 7;
-  const [board, setBoard] = useState(Array(rows).fill(null).map(() => Array(cols).fill(null)));
-  const [currentPlayer, setCurrentPlayer] = useState('Red');
+  const createEmptyBoard = () => Array.from({ length: ROWS }, () => Array(COLS).fill(null));
+
+  const [board, setBoard] = useState(createEmptyBoard());
+  const [currentPlayer, setCurrentPlayer] = useState(HUMAN_PLAYER);
   const [gameOver, setGameOver] = useState(false);
+  const [difficulty, setDifficulty] = useState('medium');
 
   useEffect(() => {
-    if (currentPlayer === 'Yellow' && !gameOver) {
-      const bestMove = getBestMove(board);
+    if (currentPlayer === AI_PLAYER && !gameOver) {
+      const bestMove = getBestMove(board, DIFFICULTY_LEVELS[difficulty].depth);
       if (bestMove !== null) {
         handleClick(bestMove, true);
       }
     }
-  }, [currentPlayer, gameOver]);
+  }, [board, currentPlayer, gameOver, difficulty]);
+
+  const resetGame = () => {
+    setBoard(createEmptyBoard());
+    setCurrentPlayer(HUMAN_PLAYER);
+    setGameOver(false);
+  };
 
   const handleClick = (col, isAi = false) => {
-    if (gameOver || (currentPlayer === 'Yellow' && !isAi)) return; // Prevent player from playing during AI's turn
+    if (gameOver || (currentPlayer === AI_PLAYER && !isAi)) return; // Prevent player from playing during AI's turn
 
-    for (let row = rows - 1; row >= 0; row--) {
+    for (let row = ROWS - 1; row >= 0; row--) {
       if (!board[row][col]) {
         const newBoard = board.map(row => row.slice());
         newBoard[row][col] = currentPlayer;
@@ -34,7 +51,7 @@ const Connect4 = () => {
           setGameOver(true);
           alert('It\'s a tie!');
         } else {
-          setCurrentPlayer(currentPlayer === 'Red' ? 'Yellow' : 'Red');
+          setCurrentPlayer(currentPlayer === HUMAN_PLAYER ? AI_PLAYER : HUMAN_PLAYER);
         }
         return;
       }
@@ -45,26 +62,25 @@ const Connect4 = () => {
     <div className="cell" onClick={() => handleClick(col)} style={{ backgroundColor: board[row][col] || 'white' }}></div>
   );
 
-  const getBestMove = (board) => {
-    const depth = 5; // Limit the depth of the minimax algorithm
+  const getBestMove = (board, depth) => {
     const [bestMove] = minimax(board, depth, true, -Infinity, Infinity);
     return bestMove;
   };
 
   const minimax = (board, depth, isMaximizing, alpha, beta) => {
     const winner = checkWinner(board);
-    if (winner === 'Red') return [null, -1000000];
-    if (winner === 'Yellow') return [null, 1000000];
+    if (winner === AI_PLAYER) return [null, 1000000];
+    if (winner === HUMAN_PLAYER) return [null, -1000000];
     if (depth === 0 || isBoardFull(board)) return [null, evaluateBoard(board)];
 
     let bestMove = null;
     let bestScore = isMaximizing ? -Infinity : Infinity;
 
-    for (let col = 0; col < cols; col++) {
+    for (let col = 0; col < COLS; col++) {
       const row = getAvailableRow(board, col);
       if (row !== null) {
         const newBoard = board.map(row => row.slice());
-        newBoard[row][col] = isMaximizing ? 'Yellow' : 'Red';
+        newBoard[row][col] = isMaximizing ? AI_PLAYER : HUMAN_PLAYER;
         const [, score] = minimax(newBoard, depth - 1, !isMaximizing, alpha, beta);
         if (isMaximizing) {
           if (score > bestScore) {
@@ -89,25 +105,25 @@ const Connect4 = () => {
     let score = 0;
 
     // Evaluate center column
-    const centerArray = board.map(row => row[Math.floor(cols / 2)]);
-    score += countOccurrences(centerArray, 'Yellow') * 3;
+    const centerArray = board.map(row => row[Math.floor(COLS / 2)]);
+    score += countOccurrences(centerArray, AI_PLAYER) * 3;
 
     // Evaluate all rows, columns, and diagonals
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
-        if (col + 3 < cols) {
+    for (let row = 0; row < ROWS; row++) {
+      for (let col = 0; col < COLS; col++) {
+        if (col + 3 < COLS) {
           // Horizontal
           score += evaluateSegment([board[row][col], board[row][col + 1], board[row][col + 2], board[row][col + 3]]);
         }
-        if (row + 3 < rows) {
+        if (row + 3 < ROWS) {
           // Vertical
           score += evaluateSegment([board[row][col], board[row + 1][col], board[row + 2][col], board[row + 3][col]]);
         }
-        if (row + 3 < rows && col + 3 < cols) {
+        if (row + 3 < ROWS && col + 3 < COLS) {
           // Positive diagonal
           score += evaluateSegment([board[row][col], board[row + 1][col + 1], board[row + 2][col + 2], board[row + 3][col + 3]]);
         }
-        if (row + 3 < rows && col - 3 >= 0) {
+        if (row + 3 < ROWS && col - 3 >= 0) {
           // Negative diagonal
           score += evaluateSegment([board[row][col], board[row + 1][col - 1], board[row + 2][col - 2], board[row + 3][col - 3]]);
         }
@@ -119,8 +135,8 @@ const Connect4 = () => {
 
   const evaluateSegment = (segment) => {
     let score = 0;
-    const yellowCount = countOccurrences(segment, 'Yellow');
-    const redCount = countOccurrences(segment, 'Red');
+    const yellowCount = countOccurrences(segment, HUMAN_PLAYER);
+    const redCount = countOccurrences(segment, AI_PLAYER);
 
     if (yellowCount === 4) {
       score += 100;
@@ -146,7 +162,7 @@ const Connect4 = () => {
   };
 
   const getAvailableRow = (board, col) => {
-    for (let row = rows - 1; row >= 0; row--) {
+    for (let row = ROWS - 1; row >= 0; row--) {
       if (!board[row][col]) return row;
     }
     return null;
@@ -160,13 +176,13 @@ const Connect4 = () => {
       for (let i = 1; i < 4; i++) {
         const r = row + i * rowStep;
         const c = col + i * colStep;
-        if (r < 0 || r >= rows || c < 0 || c >= cols || board[r][c] !== player) return null;
+        if (r < 0 || r >= ROWS || c < 0 || c >= COLS || board[r][c] !== player) return null;
       }
       return player;
     };
 
-    for (let row = 0; row < rows; row++) {
-      for (let col = 0; col < cols; col++) {
+    for (let row = 0; row < ROWS; row++) {
+      for (let col = 0; col < COLS; col++) {
         if (checkDirection(row, col, 0, 1) || checkDirection(row, col, 1, 0) || checkDirection(row, col, 1, 1) || checkDirection(row, col, 1, -1)) {
           return board[row][col];
         }
@@ -181,6 +197,29 @@ const Connect4 = () => {
 
   return (
     <div className="connect4">
+      <div className="controls">
+        <label className="difficultyLabel" htmlFor="difficulty-select">
+          Difficulty
+        </label>
+        <select
+          id="difficulty-select"
+          className="difficultySelect"
+          value={difficulty}
+          onChange={(event) => {
+            setDifficulty(event.target.value);
+            resetGame();
+          }}
+        >
+          {Object.entries(DIFFICULTY_LEVELS).map(([value, config]) => (
+            <option key={value} value={value}>
+              {config.label}
+            </option>
+          ))}
+        </select>
+        <button type="button" className="resetButton" onClick={resetGame}>
+          New Game
+        </button>
+      </div>
       {board.map((row, rowIndex) => (
         <div className="row" key={rowIndex}>
           {row.map((_, colIndex) => (

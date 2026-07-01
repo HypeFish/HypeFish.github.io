@@ -25,5 +25,8 @@
     "spotify-web-api-node": "^5.0.2",
     "typescript": "^5.4.5",
     "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/spotify-web-api-node": "^5.0.11"
   }
 }
